@@ -19,6 +19,7 @@ for t in range(tries):
     if t > tries - 1:
         break
 
+# setting values
 wins = 0
 money_back = 0
 ws['F6'].value = 0
