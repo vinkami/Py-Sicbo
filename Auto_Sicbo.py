@@ -1,22 +1,20 @@
-import more_functions.extra.Sicbo_Simulator as ss
+import Sicbo_Simulator as ss
 import random
 import openpyxl
 import time
 
-print('modules rendered')
 tries = 200000
-min_money = 500
-max_money = 10000
-print('loading workbook')
-wb = openpyxl.load_workbook('sicbo results.xlsx')
-print('loading worksheet')
+money = range(500, 50000)  # change here to bet in different money ranges
+choices = ['big', 'small']  # Change here for different betting choices
+workbook = 'sicbo results.xlsx' # Remember to change for a correct filename if needed
+
+wb = openpyxl.load_workbook(workbook)
 ws = wb.active
-print(ws, ws.max_row)
-time.sleep(5)
 result = []
-print('starts gaming')
-for t in range(tries):
-    result.append(ss.sicbo(random.choice(['big', 'small']), random.choice(list(range(min_money, max_money)))))
+
+# Gaming section
+for t in range(tries):                
+    result.append(ss.sicbo(random.choice(choices), random.choice(list(money))))
     print(f'Game {t}: {result[-1]} (Playing section)')
     if t > tries - 1:
         break
@@ -24,7 +22,8 @@ for t in range(tries):
 wins = 0
 money_back = 0
 ws['F6'].value = 0
-print('result making')
+
+# Marking down results
 for a, b, c, d, e in result:
     profit = a - b
     money_back += profit
@@ -46,4 +45,4 @@ if money_back >= 0:
     print(f"Money gain (per play): ${money_back / len(result)}")
 else:
     print(f"Money lost (per play): ${-money_back / len(result)}")
-wb.save('sicbo results.xlsx')
+wb.save(workbook)
