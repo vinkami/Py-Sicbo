@@ -13,15 +13,16 @@ methods = ['4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16
            'triples', 'triple 1', 'triple 2', 'triple 3', 'triple 4', 'triple 5', 'triple 6']
 
 
+# main function
 def sicbo(choice, money):
     double = None
     dice1 = random.randint(1, 6)
     dice2 = random.randint(1, 6)
     dice3 = random.randint(1, 6)
     value = dice1 + dice2 + dice3
-    is_big = True if 11 <= value <= 18 else False
-    triple = dice1 if dice1 == dice2 == dice3 else None
-    if triple is not None:
+    is_big = True if 11 <= value <= 18 else False  # Test if result is big or small
+    triple = dice1 if dice1 == dice2 == dice3 else None  # Test if all 3 dices are the same 
+    if triple is not None:  # Test if 2 out of 3 dices are the same
         if dice1 == dice2 or dice1 == dice3:
             double = dice1
         elif dice2 == dice3:
@@ -29,6 +30,7 @@ def sicbo(choice, money):
     else:
         double = None
 
+    # Calculating result
     money_gain = 0
     if choice == str(value):
         if value == 4 or value == 17:
@@ -56,13 +58,8 @@ def sicbo(choice, money):
     return money_gain, money, dice1, dice2, dice3
 
 
-def sicbo_check(choices, moneys):
-    if str(choice) not in methods:
-        raise NoSuchGamblingMethod(f"There's no such method for you to gamble ({choice}).")
-    moneys = float(moneys)
-    sicbo(choices, moneys)
 
-
+# Do 1 bet here by slimpy running this file
 if __name__ == '__main__':
     print('Please enter the choice.')
     choice = input()
